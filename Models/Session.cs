@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FastCast.Models
 {
@@ -12,6 +13,7 @@ namespace FastCast.Models
         public int InitiatorId { get; set; }
 
         // List of possible participants
+        [NotMapped]
         public List<int> Participants { get; set; }
 
         // timer in seconds
