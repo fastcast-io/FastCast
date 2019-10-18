@@ -5,7 +5,18 @@
 }
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-6">Enter Session Code</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="SessionId">Session Code</label>
+            <input type="text" name="SessionId">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Join</button>
+        </div>
+    </form>
+    <!--<h2>The code you entered was @ViewData["SessionId"]</h2>-->
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSchTqjGMem0vIguYs3aNbFV-F7PPLV6eIAUrWu_KZG8kqMfDA/viewform?embedded=true" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 </div>

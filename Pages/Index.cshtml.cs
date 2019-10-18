@@ -17,9 +17,16 @@ namespace FastCast.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public void OnPost()
         {
+            var sessionId = Request.Form["SessionId"];
 
+            // Get the session with this session ID using Linq
+            // Set the ViewData form ID so it displays
+            // Set the ViewData session timer so it displays
+
+            // Use this if we want to display it on the front page still
+            // ViewData["SessionId"] = Request.Form["SessionId"];
         }
     }
 }
