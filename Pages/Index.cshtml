@@ -17,6 +17,8 @@
             <button type="submit" class="btn btn-primary">Join</button>
         </div>
     </form>
-    <!--<h2>The code you entered was @ViewData["SessionId"]</h2>-->
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSchTqjGMem0vIguYs3aNbFV-F7PPLV6eIAUrWu_KZG8kqMfDA/viewform?embedded=true" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    @if (ViewData["SessionId"] != null)
+    {
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSchTqjGMem0vIguYs3aNbFV-F7PPLV6eIAUrWu_KZG8kqMfDA/viewform?embedded=true" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    }
 </div>
