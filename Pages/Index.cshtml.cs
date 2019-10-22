@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using FastCast.Models;
 
 namespace FastCast.Pages
 {
@@ -20,13 +21,13 @@ namespace FastCast.Pages
         public void OnPost()
         {
             var sessionId = Request.Form["SessionId"];
-
+            
             // Get the session with this session ID using Linq
             // Set the ViewData form ID so it displays
             // Set the ViewData session timer so it displays
 
             // Use this if we want to display it on the front page still
-            // ViewData["SessionId"] = Request.Form["SessionId"];
+            ViewData["SessionId"] = Request.Form["SessionId"];
         }
     }
 }
