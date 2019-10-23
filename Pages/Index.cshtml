@@ -11,14 +11,26 @@
     <form method="post">
         <div class="form-group">
             <label for="SessionId">Session Code</label>
-            <input type="text" name="SessionId">
+            <input type="text" name="AuthCode">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Join</button>
         </div>
     </form>
-    @if (ViewData["SessionId"] != null)
+    @if (ViewData["SessionStatus"] != null)
     {
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSchTqjGMem0vIguYs3aNbFV-F7PPLV6eIAUrWu_KZG8kqMfDA/viewform?embedded=true" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        @if (ViewData["SessionStatus"].ToString() == "OK")
+        {
+            <h3 style="color:green;">You have successfully joined the session!</h3>
+        }
+        else
+        {
+            <h3 style="color:red;">That code doesn't, try entering a new one!</h3>
+        }
+    }
+    
+    @if (ViewData["FormId"] != null)
+    {
+        <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     }
 </div>

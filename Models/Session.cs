@@ -20,6 +20,6 @@ namespace FastCast.Models
         public int Timer { get; set; }
 
         // Google Form Question
-        public int FormId { get; set; }
+        public string FormId { get; set; }
     }
 }
