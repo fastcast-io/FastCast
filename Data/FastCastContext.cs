@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FastCast.Models
 {
     public class FastCastContext : DbContext
     {
         public FastCastContext (DbContextOptions<FastCastContext> options)
-            : base(options)
+            : base(options) 
         {
         }
 
