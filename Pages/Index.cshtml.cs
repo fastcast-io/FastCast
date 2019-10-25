@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using FastCast.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastCast.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly FastCastContext _context;
+
+        public IList<Models.Session> Session { get;set; }
+
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, FastCastContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -22,18 +29,11 @@ namespace FastCast.Pages
         {
             var authCode = Request.Form["AuthCode"];
 
-            var sessions = new List<Models.Session>
-            {
-                new Models.Session
-                {
-                    SessionCode = "project",
-                    FormId = "1FAIpQLSchTqjGMem0vIguYs3aNbFV-F7PPLV6eIAUrWu_KZG8kqMfDA"
-                }
-            };
+            Session = _context.Session.ToList();
 
             try
             {
-                var selectedSession = (from s in sessions
+                var selectedSession = (from s in Session
                                        where s.SessionCode == authCode
                                        select s).Single();
 

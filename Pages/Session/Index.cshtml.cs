@@ -11,9 +11,9 @@ namespace FastCast.Pages.Session
 {
     public class IndexModel : PageModel
     {
-        private readonly FastCast.Models.FastCastContext _context;
+        private readonly FastCastContext _context;
 
-        public IndexModel(FastCast.Models.FastCastContext context)
+        public IndexModel(FastCastContext context)
         {
             _context = context;
         }
