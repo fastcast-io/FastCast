@@ -39,7 +39,7 @@ namespace FastCast
                 });
 
             services.AddDbContext<FastCastContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("FastCastContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DockerDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
