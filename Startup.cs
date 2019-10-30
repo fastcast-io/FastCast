@@ -38,8 +38,12 @@ namespace FastCast
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
+            var connectionString = Configuration.GetConnectionString("FastCastContext");
+
             services.AddDbContext<FastCastContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DockerDB")));
+                    options.UseSqlServer(connectionString));
+            //services.AddDbContext<FastCastContext>(options =>
+            //          options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

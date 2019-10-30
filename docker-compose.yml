@@ -6,17 +6,19 @@ services:
             - "8000:80"
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+            - DB_CONNECTION_STRING=Server=10.161.101.232,1433;Database=fastcast;User=SA;Password=fAsTcAsT123@
         depends_on:
             - db
         volumes:
             - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
     db:
         image: "mcr.microsoft.com/mssql/server"
+        ports:
+            - "1433:1433"
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: 1
             MYSQL_DATABASE: fastcast
             MYSQL_USER: fastcast
-            MYSQL_PASSWORD: fAsTcAsT123@
             SA_PASSWORD: "fAsTcAsT123@"
             ACCEPT_EULA: "Y"
         
