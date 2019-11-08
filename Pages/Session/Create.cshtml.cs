@@ -35,10 +35,39 @@ namespace FastCast.Pages.Session
                 return Page();
             }
 
-            _context.Session.Add(Session);
-            await _context.SaveChangesAsync();
+            if (SessionCodeExists(Session.SessionCode))
+            {
+                ViewData["codeExists"] = true;
+                return Page();
+            }
+            else
+            {
+                ViewData["codeExists"] = false;
+                _context.Session.Add(Session);
+                await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+                return RedirectToPage("./Index");
+            }
+
+        }
+
+        public bool SessionCodeExists(string sessionCode)
+        {
+            var session = _context.Session.ToList();
+
+            try
+            {
+                var selectedSession = (from s in session
+                                       where s.SessionCode == sessionCode
+                                       select s).Single();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+
         }
     }
 }

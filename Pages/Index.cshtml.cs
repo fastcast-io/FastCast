@@ -38,10 +38,10 @@ namespace FastCast.Pages
                                        select s).Single();
 
                 ViewData["FormId"] = selectedSession.FormId;
-                ViewData["SessionStatus"] = "OK";
+                ViewData["SessionStatus"] = true;
             } catch (Exception)
             {
-                ViewData["SessionStatus"] = "BAD";
+                ViewData["SessionStatus"] = false;
             }
 
 

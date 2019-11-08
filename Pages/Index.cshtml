@@ -19,7 +19,7 @@
     </form>
     @if (ViewData["SessionStatus"] != null)
     {
-        @if (ViewData["SessionStatus"].ToString() == "OK")
+        @if ((bool)ViewData["SessionStatus"])
         {
             <h3 style="color:green;">You have successfully joined the session!</h3>
         }

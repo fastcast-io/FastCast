@@ -6,7 +6,7 @@ services:
             - "8000:80"
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
-            - DB_CONNECTION_STRING=Server=198.199.120.68,1433;Database=fastcast;User=SA;Password=fAsTcAsT123@
+            - DB_CONNECTION_STRING=Server=10.161.113.166,1433;Database=fastcast;User=SA;Password=fAsTcAsT123@
         depends_on:
             - db
         volumes:
