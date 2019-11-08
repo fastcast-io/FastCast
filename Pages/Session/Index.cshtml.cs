@@ -39,5 +39,12 @@ namespace FastCast.Pages.Session
         {
 
         }
+
+        public void OnPostSessionInput(int sessionTime, int sessionId)
+        {
+            Console.WriteLine($"Called with {sessionTime} {sessionId}");
+            StartSession(sessionTime, sessionId);
+        }
+
     }
 }
