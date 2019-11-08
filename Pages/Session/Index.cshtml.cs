@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FastCast.Models;
+using System.Timers;
 
 namespace FastCast.Pages.Session
 {
@@ -22,7 +23,21 @@ namespace FastCast.Pages.Session
 
         public async Task OnGetAsync()
         {
-            Session = await _context.Session.ToListAsync();
+            Session = await _context.Session.ToListAsync(); 
+        }
+
+        public void StartSession(int sessionTime, int sessionId)
+        {
+            var timer = new Timer(sessionTime);
+
+            timer.Elapsed += (sender, e) => TimerEnded(sender, e, sessionId);
+            timer.AutoReset = false;
+            timer.Start();
+        }
+
+        public void TimerEnded(object sender, ElapsedEventArgs e, int sessionId)
+        {
+
         }
     }
 }
