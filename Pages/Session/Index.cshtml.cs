@@ -26,24 +26,32 @@ namespace FastCast.Pages.Session
             Session = await _context.Session.ToListAsync(); 
         }
 
-        public void StartSession(int sessionTime, int sessionId)
+        public void StartSession(int sessionTime, Guid sessionId)
         {
             var timer = new Timer(sessionTime);
+
+            var sessionToUpdate = _context.Session
+                    .Single(s => s.SessionId == sessionId);
+
+            sessionToUpdate.IsLive = true;
+
+            _context.Session.Update(sessionToUpdate);
+            _context.SaveChanges();
 
             timer.Elapsed += (sender, e) => TimerEnded(sender, e, sessionId);
             timer.AutoReset = false;
             timer.Start();
         }
 
-        public void TimerEnded(object sender, ElapsedEventArgs e, int sessionId)
+        public void TimerEnded(object sender, ElapsedEventArgs e, Guid sessionId)
         {
-
+            ViewData["timerStarted"] = false;
         }
 
-        public void OnPostSessionInput(int sessionTime, int sessionId)
+        public void OnPostSessionInput(int sessionTime, Guid sessionId)
         {
-            Console.WriteLine($"Called with {sessionTime} {sessionId}");
             StartSession(sessionTime, sessionId);
+            ViewData["timerStarted"] = true;
         }
 
     }

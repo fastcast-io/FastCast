@@ -21,5 +21,7 @@ namespace FastCast.Models
 
         // Google Form Question
         public string FormId { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }

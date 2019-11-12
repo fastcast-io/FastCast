@@ -43,6 +43,8 @@ namespace FastCast.Pages.Session
             else
             {
                 ViewData["codeExists"] = false;
+                Session.IsLive = false;
+
                 _context.Session.Add(Session);
                 await _context.SaveChangesAsync();
 
