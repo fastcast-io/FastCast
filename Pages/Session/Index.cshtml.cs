@@ -48,10 +48,12 @@ namespace FastCast.Pages.Session
             ViewData["timerStarted"] = false;
         }
 
-        public void OnPostSessionInput(int sessionTime, Guid sessionId)
+        public IActionResult OnPostSessionInput(int sessionTime, Guid sessionId)
         {
             StartSession(sessionTime, sessionId);
             ViewData["timerStarted"] = true;
+
+            return RedirectToPage("./Index");
         }
 
     }

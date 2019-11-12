@@ -5,8 +5,8 @@
     <UserSecretsId>1053250a-f44d-4b69-89e4-39b4f92fd6c7</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Google.Apis" Version="1.41.1" />
-    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.41.1.1754" />
+    <PackageReference Include="Google.Apis" Version="1.42.0" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.42.0.1769" />
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OAuth" Version="2.2.0" />
