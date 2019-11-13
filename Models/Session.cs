@@ -23,5 +23,9 @@ namespace FastCast.Models
         public string FormId { get; set; }
 
         public bool IsLive { get; set; }
+
+        public float Latitude { get; set; }
+
+        public float Longitude { get; set; }
     }
 }

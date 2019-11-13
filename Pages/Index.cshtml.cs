@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using FastCast.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 
 namespace FastCast.Pages
 {
@@ -38,19 +39,12 @@ namespace FastCast.Pages
                                        select s).Single();
 
                 ViewData["FormId"] = selectedSession.FormId;
+                ViewData["IsLIve"] = selectedSession.IsLive;
                 ViewData["SessionStatus"] = true;
             } catch (Exception)
             {
                 ViewData["SessionStatus"] = false;
             }
-
-
-
-            // Get the session with this session ID using Linq
-            // Set the ViewData form ID so it displays
-            // Set the ViewData session timer so it displays
-
-            // Use this if we want to display it on the front page still
         }
     }
 }
