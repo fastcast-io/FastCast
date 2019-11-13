@@ -9,11 +9,6 @@ namespace FastCast
     {
         private double m_latitude = double.NaN;
         private double m_longitude = double.NaN;
-        private double m_altitude = double.NaN;
-        private double m_verticalAccuracy = double.NaN;
-        private double m_horizontalAccuracy = double.NaN;
-        private double m_speed = double.NaN;
-        private double m_course = double.NaN;
 
         public static readonly FastCastCoordinate Unknown = new FastCastCoordinate();
 
@@ -24,29 +19,11 @@ namespace FastCast
         public FastCastCoordinate() { }
 
         public FastCastCoordinate(Double latitude, Double longitude)
-            : this(latitude, longitude, Double.NaN)
-        {
-        }
-
-        public FastCastCoordinate(Double latitude, Double longitude, Double altitude)
-            : this(latitude, longitude, altitude, Double.NaN, Double.NaN, Double.NaN, Double.NaN)
-        {
-        }
-
-        public FastCastCoordinate(Double latitude, Double longitude, Double altitude,
-            Double horizontalAccuracy, Double verticalAccuracy, Double speed, Double course)
         {
             Latitude = latitude;
             Longitude = longitude;
-
-            Altitude = altitude;
-
-            HorizontalAccuracy = horizontalAccuracy;
-            VerticalAccuracy = verticalAccuracy;
-
-            Speed = speed;
-            Course = course;
         }
+
         #endregion
 
         #region Errors
@@ -89,83 +66,6 @@ namespace FastCast
                     throw new ArgumentOutOfRangeException("Longitude", Argument_MustBeInRangeNegative180To180);
                 }
                 m_longitude = value;
-            }
-        }
-
-        public Double Altitude
-        {
-            get
-            {
-                return m_altitude;
-            }
-
-            set
-            {
-                m_altitude = value;
-            }
-        }
-
-        public Double HorizontalAccuracy
-        {
-            get
-            {
-                return m_horizontalAccuracy;
-            }
-            set
-            {
-                if (value < 0.0)
-                {
-                    throw new ArgumentOutOfRangeException("HorizontalAccuracy", Argument_MustBeNonNegative);
-                }
-                m_horizontalAccuracy = (value == 0.0) ? Double.NaN : value;
-            }
-        }
-
-        public Double VerticalAccuracy
-        {
-            get
-            {
-                return m_verticalAccuracy;
-            }
-            set
-            {
-                if (value < 0.0)
-                {
-                    throw new ArgumentOutOfRangeException("VerticalAccuracy", Argument_MustBeNonNegative);
-                }
-                m_verticalAccuracy = (value == 0.0) ? Double.NaN : value;
-            }
-        }
-
-        public Double Speed
-        {
-            get
-            {
-                return m_speed;
-            }
-            set
-            {
-                if (value < 0.0)
-                {
-                    throw new ArgumentOutOfRangeException("speed", Argument_MustBeNonNegative);
-                }
-                m_speed = value;
-            }
-        }
-
-        public Double Course
-        {
-            get
-            {
-                return m_course;
-            }
-            set
-            {
-                if (value < 0.0 || value > 360.0)
-                {
-                    throw new ArgumentOutOfRangeException("course", Argument_MustBeInRangeZeroTo360);
-                }
-                m_course = value;
             }
         }
 
@@ -240,20 +140,12 @@ namespace FastCast
             return Latitude.GetHashCode() ^ Longitude.GetHashCode();
         }
 
-        /// <summary>
-        /// Object.Equals. Calls into IEquatable.Equals
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (!(obj is FastCastCoordinate)) return base.Equals(obj);
             return Equals(obj as FastCastCoordinate);
         }
-        /// <summary>
-        /// This override is for debugging purpose only
-        /// </summary>
-        /// <returns></returns>
+
         public override string ToString()
         {
             if (this == FastCastCoordinate.Unknown)
