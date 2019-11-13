@@ -29,8 +29,13 @@
         }
         else
         {
-            <h3 style="color:red;">That code doesn't, try entering a new one!</h3>
+            <h3 style="color:red;">That code doesn't work, try entering a new one!</h3>
         }
+    }
+
+    @if (ViewData["Error"] != null)
+    {
+        <h3 style="color:red">@ViewData["Error"]</h3>
     }
 
     @if (ViewData["FormId"] != null && (bool)ViewData["IsLive"] == true)
