@@ -33,7 +33,9 @@ namespace FastCast.Pages
             var latitude = Request.Form["Latitude"];
             var longitude = Request.Form["Longitude"];
 
-            Session = _context.Session.ToList();
+            Session = _context.Session.ToList(); // THIS IS BAD BY THE WAY. WE ARE RETRIEVING ALL THE SESSIONS LOL
+
+            bool shouldNotAccessSession = false;
 
             Debug.WriteLine($"Latitude: {latitude}, Longitude: {longitude}");
             try
@@ -42,14 +44,32 @@ namespace FastCast.Pages
                                        where s.SessionCode == authCode
                                        select s).Single();
 
-                
+                FastCastCoordinate sessionCoord = new FastCastCoordinate(latitude: selectedSession.Latitude, longitude: selectedSession.Longitude);
+                FastCastCoordinate userCoord = new FastCastCoordinate(latitude: Double.Parse(latitude), longitude: Double.Parse(longitude));
+                Double difference = sessionCoord.GetDistanceTo(userCoord);
+
+                if (difference > 100000) // Need to update
+                {
+                    shouldNotAccessSession = true;
+                    var ex = new Exception("");
+                    ex.Data.Add("LOCATION ERROR", "Your longitude and latitude is not in the region specified by the initiator. Get closer");
+                    throw ex;
+                }
+
+                ViewData["Error"] = "";
 
                 ViewData["FormId"] = selectedSession.FormId;
                 ViewData["IsLIve"] = selectedSession.IsLive;
                 ViewData["SessionStatus"] = true;
-            } catch (Exception)
+
+            } catch (Exception e)
             {
                 ViewData["SessionStatus"] = false;
+               
+                if(e.Data.Contains("LOCATION ERROR"))
+                {
+                    ViewData["Error"] = e.Data["LOCATION ERROR"];
+                }
             }
         }
     }
