@@ -41,7 +41,7 @@ namespace FastCast
             var connectionString = Configuration.GetConnectionString("FastCastContext");
 
             services.AddDbContext<FastCastContext>(options =>
-                    options.UseSqlServer(connectionString));
+                    options.UseSqlite("C:/manoj/My Work/Projects/FastCast/Saved Sessions"));
             //services.AddDbContext<FastCastContext>(options =>
             //          options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
         }
