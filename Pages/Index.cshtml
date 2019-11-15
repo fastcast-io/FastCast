@@ -8,13 +8,15 @@
 
 <div class="text-center">
     <h1 class="display-6">Enter Session Code</h1>
-    <form method="post">
+    <form id="joinSession" method="post">
         <div class="form-group">
             <label for="SessionId">Session Code</label>
             <input type="text" name="AuthCode">
         </div>
+        <input id="latitude" type="hidden" name="Latitude" />
+        <input id="longitude" type="hidden" name="Longitude" />
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">
+            <button onclick="formSubmit()" class="btn btn-primary">
                 Join
             </button>
         </div>
@@ -27,8 +29,13 @@
         }
         else
         {
-            <h3 style="color:red;">That code doesn't, try entering a new one!</h3>
+            <h3 style="color:red;">That code doesn't work, try entering a new one!</h3>
         }
+    }
+
+    @if (ViewData["Error"] != null)
+    {
+        <h3 style="color:red">@ViewData["Error"]</h3>
     }
 
     @if (ViewData["FormId"] != null && (bool)ViewData["IsLive"] == true)
@@ -39,6 +46,42 @@
 </div>
 
 <script type="text/javascript">
+    // Location Feature
+    var mainForm = document.getElementById("joinSession");
+    let longitude = null, latitude = null;
+
+    function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+              longitude = position.coords.longitude;
+              latitude = position.coords.latitude;
+          }, function (error) {
+                  console.log("There was some issue with getting your location. Please reload")
+                  // TODO: PUT AN ERROR IN THE VIEW BAG
+          });
+          
+      } else { 
+          alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
+          // TODO: Implement reloading to piss them
+      }
+    }
+
+    getLocation();
+
+    function formSubmit() {
+        getLocation();
+        document.getElementById("latitude").value = latitude;
+        document.getElementById("longitude").value = longitude;
+
+        if (latitude && longitude) {
+            console.log("Successfully retrieved user information")
+            mainForm.submit();
+        }
+        else {
+            alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
+        }
+    }
+
     // The polling function
     function poll(fn, timeout, interval) {
         var endTime = Number(new Date()) + (timeout || 2000);
