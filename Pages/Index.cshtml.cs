@@ -64,11 +64,9 @@ namespace FastCast.Pages
                 // LAT: 35.588451
                 // LONG:-101.858705 
                 // => AROUND 45.90 m
-                // TODO: IMPLEMENT A RADIUS LOL BECAUSE THAT THING IS HIGHLY INACCURATE
                 // TODO: IMPLEMENT INPUT VALIDATION FOR THE LATITUDE AND LONGITUDE
                 Debug.WriteLine($"********************************************\n\n\nDIFFERENCE IS {difference}\n\n\n********************************************\n\n\n");
-                if (difference > 40) // Might Need to update. // Need to check Pythagorean distance as well if the longitude and latitude are close,
-                                     // else, let's keep with spherical distance lol
+                if (difference > selectedSession.Radius) 
                 {
                     var ex = new Exception("");
                     ex.Data.Add("LOCATION ERROR", "Your longitude and latitude is not in the region specified by the initiator. Get closer");
