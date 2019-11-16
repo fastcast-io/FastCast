@@ -33,14 +33,15 @@ namespace FastCast.Pages
             var latitude = Request.Form["Latitude"];
             var longitude = Request.Form["Longitude"];
 
-            Session = _context.Session.ToList(); // THIS IS BAD BY THE WAY. WE ARE RETRIEVING ALL THE SESSIONS LOL
 
             Debug.WriteLine($"Latitude: {latitude}, Longitude: {longitude}");
             try
             {
-                var selectedSession = (from s in Session
-                                       where s.SessionCode == authCode
-                                       select s).Single();
+                var query = from session in _context.Session
+                            where session.SessionCode == (String) authCode
+                            select session;
+
+                var selectedSession = query.FirstOrDefault<FastCast.Models.Session>();
 
                 FastCastCoordinate sessionCoord = new FastCastCoordinate(latitude: selectedSession.Latitude, longitude: selectedSession.Longitude);
                 FastCastCoordinate userCoord = new FastCastCoordinate(latitude: Double.Parse(latitude), longitude: Double.Parse(longitude));
@@ -64,11 +65,9 @@ namespace FastCast.Pages
                 // LAT: 35.588451
                 // LONG:-101.858705 
                 // => AROUND 45.90 m
-                // TODO: IMPLEMENT A RADIUS LOL BECAUSE THAT THING IS HIGHLY INACCURATE
                 // TODO: IMPLEMENT INPUT VALIDATION FOR THE LATITUDE AND LONGITUDE
                 Debug.WriteLine($"********************************************\n\n\nDIFFERENCE IS {difference}\n\n\n********************************************\n\n\n");
-                if (difference > 40) // Might Need to update. // Need to check Pythagorean distance as well if the longitude and latitude are close,
-                                     // else, let's keep with spherical distance lol
+                if (difference > selectedSession.Radius) 
                 {
                     var ex = new Exception("");
                     ex.Data.Add("LOCATION ERROR", "Your longitude and latitude is not in the region specified by the initiator. Get closer");
