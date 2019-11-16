@@ -17,14 +17,15 @@ namespace FastCast.Pages
     {
         private readonly FastCastContext _context;
 
-        public IList<Models.Session> Session { get;set; }
-
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger, FastCastContext context)
+        private readonly IFastCastService _fastCastService;
+
+        public IndexModel(ILogger<IndexModel> logger, FastCastContext context, IFastCastService fastCastService)
         {
             _context = context;
             _logger = logger;
+            _fastCastService = fastCastService;
         }
 
         public void OnPost()
@@ -76,9 +77,12 @@ namespace FastCast.Pages
 
                 ViewData["Error"] = "";
 
-                ViewData["FormId"] = selectedSession.FormId;
-                ViewData["IsLIve"] = selectedSession.IsLive;
-                ViewData["SessionStatus"] = true;
+                //ViewData["FormId"] = selectedSession.FormId;
+                //ViewData["IsLIve"] = selectedSession.IsLive;
+                //ViewData["SessionStatus"] = true;
+                //HttpContext.Items["SessionCode"] = selectedSession.SessionCode;
+                _fastCastService.AddData("SessionCode", selectedSession.SessionCode);
+                Response.Redirect("/Answer");
 
             } catch (Exception e)
             {

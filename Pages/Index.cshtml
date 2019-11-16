@@ -6,43 +6,52 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<div class="text-center">
-    <h1 class="display-6">Enter Session Code</h1>
-    <form id="joinSession" method="post">
-        <div class="form-group">
-            <label for="SessionId">Session Code</label>
-            <input type="text" name="AuthCode">
-        </div>
-        <input id="latitude" type="hidden" name="Latitude" />
-        <input id="longitude" type="hidden" name="Longitude" />
-        <div class="form-group">
-            <button onclick="formSubmit()" class="btn btn-primary">
-                Join
-            </button>
-        </div>
-    </form>
-    @if (ViewData["SessionStatus"] != null)
-    {
-        @if ((bool)ViewData["SessionStatus"])
+<div class="container">
+    <div class="main-page-box" style="height: 51vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;">
+
+    </div>
+    <div class="row"></div>
+    <div class="text-center">
+        <h1 class="display-6">Enter Session Code</h1>
+        <form id="joinSession" method="post">
+            <div class="form-group">
+                <label for="SessionId">Session Code</label>
+                <input type="text" name="AuthCode">
+            </div>
+            <input id="latitude" type="hidden" name="Latitude" />
+            <input id="longitude" type="hidden" name="Longitude" />
+            <div class="form-group">
+                <button onclick="formSubmit()" class="btn btn-primary">
+                    Join
+                </button>
+            </div>
+        </form>
+        @if (ViewData["SessionStatus"] != null)
         {
-            <h3 style="color:green;">You have successfully joined the session!</h3>
+            @if ((bool)ViewData["SessionStatus"])
+            {
+                <h3 style="color:green;">You have successfully joined the session!</h3>
+            }
+            else
+            {
+                <h3 style="color:red;">That code doesn't work, try entering a new one!</h3>
+            }
         }
-        else
+
+        @if (ViewData["Error"] != null)
         {
-            <h3 style="color:red;">That code doesn't work, try entering a new one!</h3>
+            <h3 style="color:red">@ViewData["Error"]</h3>
         }
-    }
 
-    @if (ViewData["Error"] != null)
-    {
-        <h3 style="color:red">@ViewData["Error"]</h3>
-    }
+        @if (ViewData["FormId"] != null && (bool)ViewData["IsLive"] == true)
+        {
+            <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        }
 
-    @if (ViewData["FormId"] != null && (bool)ViewData["IsLive"] == true)
-    {
-        <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    }
-
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -57,7 +66,6 @@
               latitude = position.coords.latitude;
           }, function (error) {
                   console.log("There was some issue with getting your location. Please reload")
-                  // TODO: PUT AN ERROR IN THE VIEW BAG
           });
           
       } else { 
@@ -81,37 +89,4 @@
             alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
         }
     }
-
-    // The polling function
-    function poll(fn, timeout, interval) {
-        var endTime = Number(new Date()) + (timeout || 2000);
-        interval = interval || 100;
-
-        var checkCondition = function(resolve, reject) {
-    // If the condition is met, we're done! 
-            var result = fn();
-            if(result) {
-                resolve(result);
-            }
-    // If the condition isn't met but the timeout hasn't elapsed, go again
-            else if (Number(new Date()) < endTime) {
-                setTimeout(checkCondition, interval, resolve, reject);
-            }
-    // Didn't match and too much time, reject!
-            else {
-                reject(new Error('timed out for ' + fn + ': ' + arguments));
-            }
-        };
-
-        return new Promise(checkCondition);
-    }
-
-    // Usage:  ensure element is visible
-        poll(function() {
-            return document.getElementById('lightbox').offsetWidth > 0;
-        }, 2000, 150).then(function() {
-    // Polling done, now do something else!
-        }).catch(function() {
-    // Polling timed out, handle the error!
-        });
 </script>
