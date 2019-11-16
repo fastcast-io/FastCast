@@ -74,23 +74,22 @@ namespace FastCast.Pages
                     ex.Data.Add("LOCATION ERROR", "Your longitude and latitude is not in the region specified by the initiator. Get closer");
                     throw ex;
                 }
-
-                ViewData["Error"] = "";
+                ViewData["Error"] = null;
 
                 //ViewData["FormId"] = selectedSession.FormId;
                 //ViewData["IsLIve"] = selectedSession.IsLive;
                 //ViewData["SessionStatus"] = true;
                 //HttpContext.Items["SessionCode"] = selectedSession.SessionCode;
                 _fastCastService.AddData("SessionCode", selectedSession.SessionCode);
-                Response.Redirect("/Answer");
+                //Response.Redirect("/Answer");
 
             } catch (Exception e)
             {
-                ViewData["SessionStatus"] = false;
+                ViewData["Error"] = "We could not find any session linked to your session code :(";
                
                 if(e.Data.Contains("LOCATION ERROR"))
                 {
-                    ViewData["Error"] = e.Data["LOCATION ERROR"];
+                    ViewData["Error"] += $"\n{e.Data["LOCATION ERROR"]}";
                 }
             }
         }
