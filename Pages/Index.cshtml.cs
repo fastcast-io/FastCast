@@ -33,14 +33,15 @@ namespace FastCast.Pages
             var latitude = Request.Form["Latitude"];
             var longitude = Request.Form["Longitude"];
 
-            Session = _context.Session.ToList(); // THIS IS BAD BY THE WAY. WE ARE RETRIEVING ALL THE SESSIONS LOL
 
             Debug.WriteLine($"Latitude: {latitude}, Longitude: {longitude}");
             try
             {
-                var selectedSession = (from s in Session
-                                       where s.SessionCode == authCode
-                                       select s).Single();
+                var query = from session in _context.Session
+                            where session.SessionCode == (String) authCode
+                            select session;
+
+                var selectedSession = query.FirstOrDefault<FastCast.Models.Session>();
 
                 FastCastCoordinate sessionCoord = new FastCastCoordinate(latitude: selectedSession.Latitude, longitude: selectedSession.Longitude);
                 FastCastCoordinate userCoord = new FastCastCoordinate(latitude: Double.Parse(latitude), longitude: Double.Parse(longitude));
