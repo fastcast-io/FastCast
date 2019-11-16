@@ -20,7 +20,10 @@
                        placeholder="Session code"
                        aria-label="Session code"
                        aria-describedby="join-button"
-                       name="AuthCode">
+                       name="AuthCode"
+                       autofocus
+                       autocomplete="off"
+                       >
                 <input id="latitude" type="hidden" name="Latitude" />
                 <input id="longitude" type="hidden" name="Longitude" />
                 <div class="input-group-append">
@@ -45,7 +48,7 @@
                     <div class="alert alert-success w-100 col-lg" role="alert" id="get-session-success">
                         We found your session and you are authenticated! <b>Redirecting now!!</b>
                     </div>
-                    <meta http-equiv="refresh" content="2;url=./answer" />
+                    <meta http-equiv="refresh" content="1;url=./answer" />
                 }
             }
         </div>
@@ -82,7 +85,7 @@
         document.getElementById("longitude").value = longitude;
 
         if (latitude && longitude) {
-            console.log("Successfully retrieved user information")
+            console.log(`Successfully retrieved user information. {longitude:${longitude}, latitude:${latitude}`)
             mainForm.submit();
         }
         else {
