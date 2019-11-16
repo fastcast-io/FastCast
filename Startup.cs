@@ -47,15 +47,7 @@ namespace FastCast
             //          options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
             services.AddSingleton<IFastCastService, FastCastService>();
-            //services.AddBreadcrumbs(GetType().Assembly, options =>
-            //{
-            //    options.TagName = "nav";
-            //    options.TagClasses = "";
-            //    options.OlClasses = "breadcrumb";
-            //    options.LiClasses = "breadcrumb-item";
-            //    options.ActiveLiClasses = "breadcrumb-item active";
-            //    options.SeparatorElement = "<li class=\"separator\">/</li>";
-            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,8 +11,10 @@
 
         @if (ViewData["SessionAnswerError"] != null)
         {
-            <h1>Error</h1>
-            <h3 style="color:red;">@ViewData["SessionAnswerError"]</h3>
+            <h1 style="color:red;">Error</h1>
+            <div class="alert alert-danger w-100 col-lg" role="alert" id="get-session-error">
+                @ViewData["SessionAnswerError"]
+            </div>
             <h3>Redirecting you</h3>
             <meta http-equiv="refresh" content="5;url=./" />
             <!--//TODO: Play with the UI maybe !-->
