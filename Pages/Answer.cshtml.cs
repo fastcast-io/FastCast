@@ -26,7 +26,16 @@ namespace FastCast.Pages
             else
             {
                 ViewData["SessionCode"] = sessionCode;
+                ViewData["SessionName"] = "SESSION TEST"; //_fastCastService.GetData("SessionName");
+                ViewData["SessionFormId"] = _fastCastService.GetData("SessionForm");
             }
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            // Todo: add some more checks and different checks
+            return RedirectToPage("./AnswerSuccess");
+
         }
     }
 }

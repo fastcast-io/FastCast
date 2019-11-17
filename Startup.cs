@@ -67,6 +67,12 @@ namespace FastCast
                 app.UseHsts();
             }
 
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.Headers.Add("X-Frame-Options", "GOFORIT"); // ALLOW-FROM https://docs.google.com
+            //    await next();
+            //});
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

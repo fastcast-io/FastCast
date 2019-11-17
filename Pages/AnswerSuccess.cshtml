@@ -1,0 +1,20 @@
+﻿@page
+@model FastCast.Pages.AnswerSuccessModel
+@{
+    ViewData["Title"] = "AnswerSuccess";
+}
+
+@if (ViewData["SessionCode"] != null)
+{
+    <h1 class="display-1">You've successfully completed the form (Session code: @ViewData["SessionCode"])</h1>
+    <meta http-equiv="refresh" content="3;url=./" />
+}
+else
+{
+    <h1 style="color:red;font-weight:600;">Error</h1>
+    <div class="alert alert-danger w-100 col-lg" role="alert" id="get-session-error">
+        Don't know you! Please redo the process
+    </div>
+    <meta http-equiv="refresh" content="3;url=./" />
+}
+

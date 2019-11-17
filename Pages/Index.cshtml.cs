@@ -79,6 +79,7 @@ namespace FastCast.Pages
 
                 //_fastCastService.AddData("SessionName", selectedSession.SessionName);
                 _fastCastService.AddData("SessionCode", selectedSession.SessionCode);
+                _fastCastService.AddData("SessionFormId", selectedSession.FormId);
                 //Response.Redirect("/Answer");
 
             } catch (Exception e)
