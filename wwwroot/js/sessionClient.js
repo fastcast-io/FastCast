@@ -50,16 +50,16 @@ sessionConnection.on("ShowDurationLeft", function (durationLeft) {
         shortJumboTitle.innerText = "";
         formIFrame.src = sv;
         formIFrame.style.display = "initial";
-        formWrapper.style.visibility = "visible";
+        formWrapper.style.display = "initial";
         completeSurveyBtn.disabled = false;
 
         // Status
-        statusNoStartTd.style.visibility = "hidden";
-        statusStartedTd.style.visibility = "visible";
+        statusNoStartTd.style.display = "none";
+        statusStartedTd.style.display = "initial";
 
         // Progress
-        statusNoStartProgress.style.visibility = "hidden";
-        statusStartedProgress.style.visibility = "visible";
+        statusNoStartProgress.style.display = "none";
+        statusStartedProgress.style.display = "initial";
     }
     durationSpan.innerText = durationLeft.remaining;
 });
@@ -70,15 +70,15 @@ sessionConnection.on("StopTimer", function () {
         shortJumboTitle.innerText = "";
         formIFrame.src = "";
         sv = "";
-        formWrapper.style.visibility = "hidden";
+        formWrapper.style.display = "none";
 
         // Status
-        statusStartedTd.style.visibility = "hidden";
-        statusEndTd.style.visibility = "initial";
+        statusStartedTd.style.display = "none";
+        statusEndTd.style.display = "initial";
 
         // Progress
-        statusStartedProgress.style.visibility = "hidden";
-        statusEndProgress.style.visibility = "visible";
+        statusStartedProgress.style.display = "none";
+        statusEndProgress.style.display = "initial";
     }
     durationSpan.innerText = 0;
     shortJumbo.innerText = "Timer stopped. Thank you for participating";
