@@ -38,10 +38,5 @@ namespace FastCast.Pages.Session
             }
             return Page();
         }
-
-        //public void OnGet()
-        //{
-
-        //}
     }
 }
