@@ -88,7 +88,7 @@ namespace FastCast.Pages
                
                 if(e.Data.Contains("LOCATION ERROR"))
                 {
-                    ViewData["Error"] += $"\n{e.Data["LOCATION ERROR"]}";
+                    ViewData["Error"] = $"\n{e.Data["LOCATION ERROR"]} :(";
                 }
             }
         }

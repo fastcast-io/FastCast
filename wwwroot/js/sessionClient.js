@@ -1,4 +1,4 @@
-﻿"use strict"
+﻿//"use strict"
 
 var hasStarted = false
 var mySessionCode = -1
@@ -48,16 +48,16 @@ sessionConnection.on("ShowDurationLeft", function (durationLeft) {
         // Form
         shortJumboTitle.innerText = "";
         formIFrame.src = sv;
-        formWrapper.style.display = "normal";
+        formWrapper.style.display = "initial";
         completeSurveyBtn.disabled = false;
 
         // Status
         statusNoStartTd.display = "none";
-        statusStartedTd.display = "normal";
+        statusStartedTd.display = "initial";
 
         // Progress
         statusNoStartProgress.display = "none";
-        statusStartedProgress.display = "normal";
+        statusStartedProgress.display = "initial";
     }
     durationSpan.innerText = durationLeft.remaining;
 });
@@ -72,11 +72,11 @@ sessionConnection.on("StopTimer", function () {
 
         // Status
         statusStartedTd.display = "none";
-        statusEndTd.display = "normal";
+        statusEndTd.display = "initial";
 
         // Progress
         statusStartedProgress.display = "none";
-        statusEndProgress.display = "normal";
+        statusEndProgress.display = "initial";
     }
     durationSpan.innerText = 0;
     shortJumbo.innerText = "Timer stopped. Thank you for participating";

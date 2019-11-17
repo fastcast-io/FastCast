@@ -27,7 +27,7 @@ namespace FastCast.Pages
             {
                 ViewData["SessionCode"] = sessionCode;
                 ViewData["SessionName"] = "SESSION TEST"; //_fastCastService.GetData("SessionName");
-                ViewData["SessionFormId"] = _fastCastService.GetData("SessionForm");
+                ViewData["SessionFormId"] = _fastCastService.GetData("SessionFormId");
             }
         }
 
