@@ -7,6 +7,7 @@ var formIFrame = document.getElementById("google-form-link") //.src
 var sv = document.getElementById("rl").innerText // Really bad. Should find a way to better pass data to the javascript
 document.getElementById("rl").innerText = ""
 formIFrame.src = ""
+formIFrame.style.display = "none";
 var durationSpan = document.getElementById("remaining-time")
 var shortJumboTitle = document.getElementById("jumbotron-title")
 //var formWrapper = document.getElementById("form-location")
@@ -48,16 +49,17 @@ sessionConnection.on("ShowDurationLeft", function (durationLeft) {
         // Form
         shortJumboTitle.innerText = "";
         formIFrame.src = sv;
-        formWrapper.style.display = "initial";
+        formIFrame.style.display = "initial";
+        formWrapper.style.visibility = "visible";
         completeSurveyBtn.disabled = false;
 
         // Status
-        statusNoStartTd.display = "none";
-        statusStartedTd.display = "initial";
+        statusNoStartTd.style.visibility = "hidden";
+        statusStartedTd.style.visibility = "visible";
 
         // Progress
-        statusNoStartProgress.display = "none";
-        statusStartedProgress.display = "initial";
+        statusNoStartProgress.style.visibility = "hidden";
+        statusStartedProgress.style.visibility = "visible";
     }
     durationSpan.innerText = durationLeft.remaining;
 });
@@ -68,15 +70,15 @@ sessionConnection.on("StopTimer", function () {
         shortJumboTitle.innerText = "";
         formIFrame.src = "";
         sv = "";
-        formWrapper.style.display = "none";
+        formWrapper.style.visibility = "hidden";
 
         // Status
-        statusStartedTd.display = "none";
-        statusEndTd.display = "initial";
+        statusStartedTd.style.visibility = "hidden";
+        statusEndTd.style.visibility = "initial";
 
         // Progress
-        statusStartedProgress.display = "none";
-        statusEndProgress.display = "initial";
+        statusStartedProgress.style.visibility = "hidden";
+        statusEndProgress.style.visibility = "visible";
     }
     durationSpan.innerText = 0;
     shortJumbo.innerText = "Timer stopped. Thank you for participating";
