@@ -48,6 +48,7 @@ namespace FastCast
             //          options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
             services.AddSingleton<IFastCastService, FastCastService>();
+            services.AddSingleton<SessionDuration>();
 
         }
 
