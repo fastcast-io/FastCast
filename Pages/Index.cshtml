@@ -78,7 +78,7 @@
     }
 
     getLocation();
-
+    var times = 0;
     function formSubmit() {
         getLocation();
         document.getElementById("latitude").value = latitude;
@@ -87,6 +87,10 @@
         if (latitude && longitude) {
             console.log(`Successfully retrieved user information. {longitude:${longitude}, latitude:${latitude}`)
             mainForm.submit();
+        }
+        else if (times < 5) {
+            times += 1;
+            formSubmit();
         }
         else {
             alert("Geolocation is not supported by this browser. Please use a browser supporting browser");

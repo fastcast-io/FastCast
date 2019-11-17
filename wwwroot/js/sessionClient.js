@@ -25,7 +25,10 @@ var completeSurveyBtn = document.getElementById("completeSurvey")
  * */
 completeSurveyBtn.disabled = true;
 
-completeSurveyBtn.addEventListener("click", (e) => { submitForm(); e.preventDefault(); })
+completeSurveyBtn.addEventListener("click", (e) => {
+    console.log(document.getElementById("finish"));
+    document.getElementById("finish").submit(); e.preventDefault();
+})
 
 var sessionConnection = new signalR.HubConnectionBuilder().withUrl("/sessionHub").build();
 sessionConnection.start().then(function () {
@@ -80,14 +83,12 @@ sessionConnection.on("StopTimer", function () {
         statusStartedProgress.style.display = "none";
         statusEndProgress.style.display = "initial";
     }
+    console.log("yeah it's over");
     durationSpan.innerText = 0;
     shortJumbo.innerText = "Timer stopped. Thank you for participating";
     setInterval(function () {
-        submitForm()
+        console.log("Inside timer stopped")
+        document.getElementById("finish").submit();
     }, 5000);
     // Submit here 
 });
-
-function submitForm() {
-    document.getElementById("finish").submit();
-}
