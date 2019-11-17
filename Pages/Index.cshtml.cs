@@ -76,10 +76,8 @@ namespace FastCast.Pages
                 }
                 ViewData["Error"] = null;
 
-                //ViewData["FormId"] = selectedSession.FormId;
-                //ViewData["IsLIve"] = selectedSession.IsLive;
-                //ViewData["SessionStatus"] = true;
-                //HttpContext.Items["SessionCode"] = selectedSession.SessionCode;
+
+                //_fastCastService.AddData("SessionName", selectedSession.SessionName);
                 _fastCastService.AddData("SessionCode", selectedSession.SessionCode);
                 //Response.Redirect("/Answer");
 
