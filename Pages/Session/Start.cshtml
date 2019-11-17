@@ -25,7 +25,7 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.Timer)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" id="sessionDuration">
             @Html.DisplayFor(model => model.Session.Timer)
         </dd>
         <dt class="col-sm-2">
@@ -54,11 +54,15 @@
         </dd>
     </dl>
 
-    <form method="post">
-        <input type="hidden" asp-for="Session.SessionId" />
-        <input type="submit" value="Start" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+    @*<form method="post">*@
+<div class="row">
+    <div id="session-stats" class="btn-group-toggle" role="group" aria-label="set-unset-session">
+        <input value="Start" id="startTimer" class="btn btn-primary" />
+        <input value="Back to List" class="btn btn-outline-primary" />
+    </div>
+    </div>
+    @*<a asp-page="./Index">Back to List</a>*@
+    @*</form>*@
 
     <br />
     <div class="row">&nbsp;</div>
@@ -72,3 +76,5 @@
 </div>
 
 
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/session.js"></script>
