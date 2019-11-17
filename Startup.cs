@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using FastCast.Models;
-using SmartBreadcrumbs.Extensions;
+using FastCast.Hubs;
 
 namespace FastCast
 {
@@ -28,6 +28,7 @@ namespace FastCast
         {
             services.AddMvc();
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -75,6 +76,7 @@ namespace FastCast
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapHub<SessionHub>("/sessionHub");
             });
         }
     }
