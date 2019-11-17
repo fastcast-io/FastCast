@@ -8,22 +8,19 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Session[0].SessionName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Session[0].SessionCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Session[0].InitiatorId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Session[0].Timer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].FormId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Session[0].Latitude)
@@ -40,16 +37,13 @@
 @foreach (var item in Model.Session) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.SessionName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.SessionCode)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InitiatorId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Timer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Latitude)
@@ -63,8 +57,8 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.SessionId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.SessionId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.SessionId">Delete</a> |
-                <a asp-page="./Start" asp-route-id="@item.SessionId">Start</a>
+                <a asp-page="./Delete" class="btn btn-outline-danger" asp-route-id="@item.SessionId">Delete</a> |
+                <a asp-page="./Start" class="btn btn-primary" asp-route-id="@item.SessionId">Start</a>
             </td>
         </tr>
 }
