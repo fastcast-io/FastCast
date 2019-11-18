@@ -6,112 +6,56 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<div class="text-center">
-    <h1 class="display-6">Enter Session Code</h1>
-    <form id="joinSession" method="post">
-        <div class="form-group">
-            <label for="SessionId">Session Code</label>
-            <input type="text" name="AuthCode">
+<div class="container">
+    <div class="main-page-box" style="height: 51vh;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;">
+        <h1 class="display-4 mb-3">Enter Session Code</h1>
+        <div>&nbsp;</div>
+        <form id="joinSession" method="post">
+            <div class="input-group mx-auto">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Session code"
+                       aria-label="Session code"
+                       aria-describedby="join-button"
+                       name="AuthCode"
+                       autofocus
+                       autocomplete="off"
+                       >
+                <input id="latitude" type="hidden" name="Latitude" />
+                <input id="longitude" type="hidden" name="Longitude" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" onclick="formSubmit()" type="button" id="join-button">Join</button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="row">&nbsp;</div>
+        <div class="row w-100">
+            @if (ViewData.ContainsKey("Error"))
+            {
+                if (ViewData["Error"] != null)
+                {
+                    <div class="alert alert-danger w-100 col-lg" role="alert" id="get-session-error">
+                        @ViewData["Error"]
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success w-100 col-lg" role="alert" id="get-session-success">
+                        We found your session and you are authenticated! <b>Redirecting now!!</b>
+                    </div>
+                    <meta http-equiv="refresh" content="1;url=./answer" />
+                }
+            }
         </div>
-        <input id="latitude" type="hidden" name="Latitude" />
-        <input id="longitude" type="hidden" name="Longitude" />
-        <div class="form-group">
-            <button onclick="formSubmit()" class="btn btn-primary">
-                Join
-            </button>
-        </div>
-    </form>
-    @if (ViewData["SessionStatus"] != null)
-    {
-        @if ((bool)ViewData["SessionStatus"])
-        {
-            <h3 style="color:green;">You have successfully joined the session!</h3>
-        }
-        else
-        {
-            <h3 style="color:red;">That code doesn't work, try entering a new one!</h3>
-        }
-    }
+    </div>
 
-    @if (ViewData["Error"] != null)
-    {
-        <h3 style="color:red">@ViewData["Error"]</h3>
-    }
-
-    @if (ViewData["FormId"] != null && (bool)ViewData["IsLive"] == true)
-    {
-        <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    }
-
+    
 </div>
 
-<script type="text/javascript">
-    // Location Feature
-    var mainForm = document.getElementById("joinSession");
-    let longitude = null, latitude = null;
-
-    function getLocation() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-              longitude = position.coords.longitude;
-              latitude = position.coords.latitude;
-          }, function (error) {
-                  console.log("There was some issue with getting your location. Please reload")
-                  // TODO: PUT AN ERROR IN THE VIEW BAG
-          });
-          
-      } else { 
-          alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
-          // TODO: Implement reloading to piss them
-      }
-    }
-
-    getLocation();
-
-    function formSubmit() {
-        getLocation();
-        document.getElementById("latitude").value = latitude;
-        document.getElementById("longitude").value = longitude;
-
-        if (latitude && longitude) {
-            console.log("Successfully retrieved user information")
-            mainForm.submit();
-        }
-        else {
-            alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
-        }
-    }
-
-    // The polling function
-    function poll(fn, timeout, interval) {
-        var endTime = Number(new Date()) + (timeout || 2000);
-        interval = interval || 100;
-
-        var checkCondition = function(resolve, reject) {
-    // If the condition is met, we're done! 
-            var result = fn();
-            if(result) {
-                resolve(result);
-            }
-    // If the condition isn't met but the timeout hasn't elapsed, go again
-            else if (Number(new Date()) < endTime) {
-                setTimeout(checkCondition, interval, resolve, reject);
-            }
-    // Didn't match and too much time, reject!
-            else {
-                reject(new Error('timed out for ' + fn + ': ' + arguments));
-            }
-        };
-
-        return new Promise(checkCondition);
-    }
-
-    // Usage:  ensure element is visible
-        poll(function() {
-            return document.getElementById('lightbox').offsetWidth > 0;
-        }, 2000, 150).then(function() {
-    // Polling done, now do something else!
-        }).catch(function() {
-    // Polling timed out, handle the error!
-        });
-</script>
+<script src="~/js/fastCastLocationService.js"></script>

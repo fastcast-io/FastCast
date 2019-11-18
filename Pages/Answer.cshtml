@@ -1,0 +1,164 @@
+﻿@page
+@model FastCast.Pages.AnswerModel
+@{
+}
+<style>
+    .callout {
+        padding: 20px;
+        margin: 20px 0px 20px 5px;
+        border: 1px solid #eee;
+        border-left-width: 5px;
+        border-radius: 3px;
+        border-left-color: #5bc0de;
+    }
+
+        .callout h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #5bc0de;
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        .callout code {
+            border-radius: 3px;
+        }
+
+        .callout + .bs-callout {
+            margin-top: -5px;
+        }
+
+    .table-header {
+        text-transform: capitalize !important;
+        font-size: x-large;
+    }
+
+    .ctable th, td {
+        padding: 5px !important;
+    }
+
+    .timer-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    .callout-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        justify-items: center;
+        flex-wrap: wrap;
+    }
+
+    .fl-self-bottom {
+        display: flex;
+        align-self: flex-end;
+        justify-content: center;
+    }
+
+    .fl-self-center {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+
+    }
+
+    .fl-self-top {
+        display: flex;
+        align-self: flex-start;
+        justify-content: center;
+    }
+</style>
+
+<div class="container">
+    @if (ViewData["SessionCode"] != null)
+    {
+        <h1>Take survey</h1>
+        <hr />
+        <div class="callout">
+            <div class="container">
+                <h4>Session Status</h4>
+            </div>
+            <hr />
+            <div class="row w-100 callout-content">
+                <div class="col-md-auto col-10 col-lg-auto">
+                    <div class="container">
+                        <table class="table table-borderless ctable">
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class=""><span class="badge badge-light table-header">Session Name</span></th>
+                                    <td>@ViewData["SessionName"]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class=""><span class="badge badge-light table-header">Session Code</span></th>
+                                    <td id="mySessionCode">@ViewData["SessionCode"]</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class=""><span class="badge badge-light table-header">Status</span></th>
+                                    <td class="text-info font-weight-bold" style="display:initial" id="session-no-start">Not started</td>
+                                    <td class="text-success font-weight-bold" style="display:none" id="session-started">Started</td>
+                                    <td class="text-primary font-weight-bold" style="display:none" id="session-ended">Ended</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="container timer-box">
+                        <span class="badge badge-light table-header fl-self-top w-100">Time remaining:</span>
+                        <span id="remaining-time" class="badge badge-dark fl-self-center w-100" style="font-size: 48px">25</span>
+                        <span class="fl-self-bottom w-100">seconds</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="progress fixed-bottom">
+            <div style="display:initial;width:100%;" id="session-no-start-progress" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            <div style="display:none;width:100%;" id="session-ended-progress" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            <div style="display:none;width:100%" id="session-started-progress" class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h3  style="display:initial;" id="jumbotron-title">This is where the form will appear once the professor starts the session</h3>
+                <div style="display:none;" id="form-location">
+                    <iframe id="google-form-link" src=""
+                            width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">
+                        Loading…
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <form id="finish" method="post">
+            <button 
+                    type="submit" 
+                    id="completeSurvey" 
+                    class="btn btn-primary btn-lg btn-block">
+                Click here to complete your submission
+            </button>
+        </form>
+        <span id="rl" hidden>@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true&output=embed", @ViewData["SessionFormId"]))</span>
+    }
+
+    @if (ViewData["SessionAnswerError"] != null)
+    {
+        <h1 style="color:red;font-weight:600;">Error</h1>
+        <div class="alert alert-danger w-100 col-lg" role="alert" id="get-session-error">
+            @ViewData["SessionAnswerError"]
+        </div>
+        <h3>Redirecting you</h3>
+        <meta http-equiv="refresh" content="5;url=./" />
+        <!--//TODO: Play with the UI maybe !-->
+    }
+
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/sessionClient.js"></script>

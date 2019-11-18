@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FastCast.Models
@@ -9,6 +10,8 @@ namespace FastCast.Models
         public Guid SessionId { get; set; }
 
         public string SessionCode { get; set; }
+
+        public string SessionName { get; set; }
 
         public int InitiatorId { get; set; }
 
@@ -24,8 +27,9 @@ namespace FastCast.Models
 
         public bool IsLive { get; set; }
 
+        [Range(-90,90)]
         public float Latitude { get; set; }
-
+        [Range(-180,180)]
         public float Longitude { get; set; }
 
         public float Radius { get; set; }

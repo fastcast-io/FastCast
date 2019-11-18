@@ -1,26 +1,28 @@
 ﻿@page
-@model FastCast.Pages.Session.DetailsModel
-
+@model FastCast.Pages.Session.StartModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Start";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Session</h4>
+<div class="container">
+    <div class="row">
+        <h1>Start Session</h1>
+    </div>
+    <div class="row">&nbsp;</div>
+    <h4 class="font-weight-bold">Session Info</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.SessionName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" id="sessionCode">
             @Html.DisplayFor(model => model.Session.SessionName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.SessionCode)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" id="sessionCode">
             @Html.DisplayFor(model => model.Session.SessionCode)
         </dd>
         <dt class="col-sm-2">
@@ -32,7 +34,7 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.Timer)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10" id="sessionDuration">
             @Html.DisplayFor(model => model.Session.Timer)
         </dd>
         <dt class="col-sm-2">
@@ -60,8 +62,28 @@
             @Html.DisplayFor(model => model.Session.Radius)
         </dd>
     </dl>
+
+    @*<form method="post">*@
+<div class="row">
+    <div id="session-stats" class="btn-group-toggle" role="group" aria-label="set-unset-session">
+        <input type="button" value="Start" id="startTimer" class="btn btn-success" />
+        <a asp-page="./Index">Back to List</a>
+    </div>
+    </div>
+    @*<a asp-page="./Index">Back to List</a>*@
+    @*</form>*@
+
+    <br />
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div id="session-stats" class="btn-group-toggle" role="group" aria-label="start-stop-session">
+            <button type="button" class="btn btn-outline-info btn-lg btn-block active">
+                Remaining Time (s): <span id="remaining-time" class="badge badge-dark"></span>
+            </button>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Session.SessionId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/session.js"></script>

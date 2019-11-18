@@ -17,14 +17,15 @@ namespace FastCast.Pages
     {
         private readonly FastCastContext _context;
 
-        public IList<Models.Session> Session { get;set; }
-
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger, FastCastContext context)
+        private readonly IFastCastService _fastCastService;
+
+        public IndexModel(ILogger<IndexModel> logger, FastCastContext context, IFastCastService fastCastService)
         {
             _context = context;
             _logger = logger;
+            _fastCastService = fastCastService;
         }
 
         public void OnPost()
@@ -73,20 +74,21 @@ namespace FastCast.Pages
                     ex.Data.Add("LOCATION ERROR", "Your longitude and latitude is not in the region specified by the initiator. Get closer");
                     throw ex;
                 }
+                ViewData["Error"] = null;
 
-                ViewData["Error"] = "";
 
-                ViewData["FormId"] = selectedSession.FormId;
-                ViewData["IsLIve"] = selectedSession.IsLive;
-                ViewData["SessionStatus"] = true;
+                //_fastCastService.AddData("SessionName", selectedSession.SessionName);
+                _fastCastService.AddData("SessionCode", selectedSession.SessionCode);
+                _fastCastService.AddData("SessionFormId", selectedSession.FormId);
+                //Response.Redirect("/Answer");
 
             } catch (Exception e)
             {
-                ViewData["SessionStatus"] = false;
+                ViewData["Error"] = "We could not find any session linked to your session code :(";
                
                 if(e.Data.Contains("LOCATION ERROR"))
                 {
-                    ViewData["Error"] = e.Data["LOCATION ERROR"];
+                    ViewData["Error"] = $"\n{e.Data["LOCATION ERROR"]} :(";
                 }
             }
         }
