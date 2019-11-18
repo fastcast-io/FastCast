@@ -1,7 +1,6 @@
-﻿// Location Feature
+﻿// Location Service
 var mainForm = document.getElementById("joinSession");
 var longitude = null, latitude = null;
-//var submitted = false;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -15,7 +14,6 @@ function getLocation() {
 
     } else {
         alert("Geolocation is not supported by this browser. Please use a browser supporting browser");
-        // TODO: Implement reloading to piss them
     }
 }
 
@@ -29,9 +27,9 @@ function accessLocation() {
             if (locationWasInjected()) {
                 return resolve()
             }
+
             if (times == 5) return reject()
 
-            console.log("DELAY")
             getLocation();
             setTimeout(waitForLocationUpdate, 1000, times++);
         })(1);
@@ -42,10 +40,7 @@ function accessLocation() {
 
 
 function formSubmit(e) {
-    //console.log("WAS CALLED")
-    //getLocation();
     if (!locationWasInjected()) {
-        console.log("WAS CALLED")
         e.preventDefault();
     }
 
@@ -59,19 +54,7 @@ function formSubmit(e) {
 function startProcessingLocation() {
     console.log("Window loaded");
     $('#joinSession').submit(formSubmit)
-    //getLocation();
-    //$(document).on("submit", function t() {
-    //    console.log(`Getting location before submit`)
-    //    getLocation();
-    //})
 }
-
-//document.addEventListener("keyup", function submit(e) {
-//    if (e.keyCode === 13) {
-//        // If user taps enter, submit!
-//        document.getElementById("join-button").click();
-//    }
-//})
 
 
 window.onload = startProcessingLocation

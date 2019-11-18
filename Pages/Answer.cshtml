@@ -2,79 +2,11 @@
 @model FastCast.Pages.AnswerModel
 @{
 }
+
+@Html.HiddenFor(x => x.SessionFormId)
+@Html.HiddenFor(x => x.Authenticated)
 <style>
-    .callout {
-        padding: 20px;
-        margin: 20px 0px 20px 5px;
-        border: 1px solid #eee;
-        border-left-width: 5px;
-        border-radius: 3px;
-        border-left-color: #5bc0de;
-    }
 
-        .callout h4 {
-            margin-top: 0;
-            margin-bottom: 5px;
-            color: #5bc0de;
-        }
-
-        .callout p:last-child {
-            margin-bottom: 0;
-        }
-
-        .callout code {
-            border-radius: 3px;
-        }
-
-        .callout + .bs-callout {
-            margin-top: -5px;
-        }
-
-    .table-header {
-        text-transform: capitalize !important;
-        font-size: x-large;
-    }
-
-    .ctable th, td {
-        padding: 5px !important;
-    }
-
-    .timer-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
-    }
-
-    .callout-content {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        justify-items: center;
-        flex-wrap: wrap;
-    }
-
-    .fl-self-bottom {
-        display: flex;
-        align-self: flex-end;
-        justify-content: center;
-    }
-
-    .fl-self-center {
-        display: flex;
-        align-self: center;
-        justify-content: center;
-
-    }
-
-    .fl-self-top {
-        display: flex;
-        align-self: flex-start;
-        justify-content: center;
-    }
 </style>
 
 <div class="container">
@@ -136,15 +68,12 @@
                 </div>
             </div>
         </div>
-        <form id="finish" method="post">
-            <button 
-                    type="submit" 
-                    id="completeSurvey" 
-                    class="btn btn-primary btn-lg btn-block">
-                Click here to complete your submission
-            </button>
-        </form>
-        <span id="rl" hidden>@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true&output=embed", @ViewData["SessionFormId"]))</span>
+        <button 
+                onclick="redirectSuccess()" 
+                id="completeSurvey" 
+                class="btn btn-primary btn-lg btn-block">
+            Click here to complete your submission
+        </button>
     }
 
     @if (ViewData["SessionAnswerError"] != null)

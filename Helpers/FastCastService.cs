@@ -9,6 +9,8 @@ namespace FastCast
     {
         void AddData(string key, string data, bool forceUpdate = false);
         string GetData(string key);
+
+        void Refresh();
     }
     public class FastCastService: IFastCastService
     {
@@ -42,6 +44,11 @@ namespace FastCast
             {
                 return "-1";
             }
+        }
+
+        public void Refresh()
+        {
+            fastCastService.Clear();
         }
     }
 }

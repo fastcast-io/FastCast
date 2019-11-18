@@ -18,6 +18,9 @@ namespace FastCast.Pages
         public void OnGet()
         {
             String sessionCode = _fastCastService.GetData("SessionCode");
+            
+            _fastCastService.Refresh();
+
             if (sessionCode != "-1")
             {
                 ViewData["SessionCode"] = sessionCode;

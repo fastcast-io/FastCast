@@ -28,10 +28,6 @@ sessionConnection.start().then(function () {
     return console.error(err.toString());
 });
 
-/**
- * Event listeners
- * */
-
 document.getElementById("startTimer").addEventListener("click", function (event) {
     sessionCode = document.getElementById("sessionCode").innerText;
     sessionDuration = parseInt(document.getElementById("sessionDuration").innerText)
@@ -77,35 +73,3 @@ function stopTimer() {
         return console.error(err.toString());
     });
 }
-
-
-// Implement with back to index page
-//document.getElementById("removeSessionCode").addEventListener("click", function (event) {
-//    if (hasJoined) {
-//        sessionConnection.invoke("ExitSession", sessionCode).then(function () {
-//            hasJoined = false
-//        }).catch(function (err) {
-//            return console.error(err.toString());
-//        });
-//    }
-//    event.preventDefault();
-//})
-
-
-// We are not implementing this feature for now
-//sessionConnection.on("UserHasJoined", function () {
-//    var currentConnectedParticipants = document.getElementById("connected-participants").innerText
-//    if (currentConnectedParticipants === "") {
-//        document.getElementById("connected-participants").innerText = 0
-//    }
-//    else {
-//        document.getElementById("connected-participants").innerText = parseInt(document.getElementById("connected-participants").innerText) + 1;
-//    }
-//})
-
-//sessionConnection.on("UserLeft", function () {
-//    var currentConnectedParticipants = document.getElementById("connected-participants").innerText
-//    if (currentConnectedParticipants !== "" && parseInt(currentConnectedParticipants) > 0) {
-//        document.getElementById("connected-participants").innerText = parseInt(document.getElementById("connected-participants").innerText) - 1;
-//    }
-//})
