@@ -4,15 +4,21 @@
     ViewData["Title"] = "Start";
 }
 
-<h1>Start Session</h1>
 
 <div class="container">
-    <h4>Session Info</h4>
+    <div class="row">
+        <h1>Start Session</h1>
+    </div>
+    <div class="row">&nbsp;</div>
+    <h4 class="font-weight-bold">Session Info</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.SessionName)
         </dt>
+        <dd class="col-sm-10" id="sessionCode">
+            @Html.DisplayFor(model => model.Session.SessionName)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Session.SessionCode)
         </dt>
@@ -60,7 +66,7 @@
     @*<form method="post">*@
 <div class="row">
     <div id="session-stats" class="btn-group-toggle" role="group" aria-label="set-unset-session">
-        <input type="button" value="Start" id="startTimer" class="btn btn-primary" />
+        <input type="button" value="Start" id="startTimer" class="btn btn-success" />
         <a asp-page="./Index">Back to List</a>
     </div>
     </div>

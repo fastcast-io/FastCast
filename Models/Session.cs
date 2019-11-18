@@ -11,6 +11,8 @@ namespace FastCast.Models
 
         public string SessionCode { get; set; }
 
+        public string SessionName { get; set; }
+
         public int InitiatorId { get; set; }
 
         // List of possible participants
