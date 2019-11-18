@@ -39,25 +39,20 @@ namespace FastCast.Pages
 
         private readonly IFastCastService _fastCastService;
 
-        private bool inSubmission;
-
-        public string error;
-
         public IndexModel(ILogger<IndexModel> logger, FastCastContext context, IFastCastService fastCastService)
         {
             _context = context;
             _logger = logger;
             _fastCastService = fastCastService;
-            inSubmission = false;
         }
 
         //public void //OnPost([FromBody] string AuthCode, [FromBody] Double Latitude, [FromBody] Double Longitude)
         public async Task OnPost(UserQuery userQuery)
         {
-            Debug.WriteLine($"{Request.Form["AuthCode"]} | {Request.Form["Latitude"]} | {Request.Form["Longitude"]}");
-            var AuthCode = Request.Form["AuthCode"].ToString();
-            var Latitude = Request.Form["Latitude"].ToString().Length > 0 ? Double.Parse(Request.Form["Latitude"]) : 0;
-            var Longitude = Request.Form["Latitude"].ToString().Length > 0 ? Double.Parse(Request.Form["Longitude"]) : 0;
+            //Debug.WriteLine($"{Request.Form["AuthCode"]} | {Request.Form["Latitude"]} | {Request.Form["Longitude"]}");
+            //var AuthCode = Request.Form["AuthCode"].ToString();
+            //var Latitude = Request.Form["Latitude"].ToString().Length > 0 ? Double.Parse(Request.Form["Latitude"]) : 0;
+            //var Longitude = Request.Form["Latitude"].ToString().Length > 0 ? Double.Parse(Request.Form["Longitude"]) : 0;
             //Debug.WriteLine("YOO I WAS CALLED JUNIOR GOOD JOB!");
             // Debug.WriteLine($"Authcode: {element.AuthCode}");
             // Debug.WriteLine($"Latitude: {element.Latitude}");
@@ -65,82 +60,84 @@ namespace FastCast.Pages
             //var authCode = Request.Form["AuthCode"];
             //var latitude = Request.Form["Latitude"];
             //var longitude = Request.Form["Longitude"];
-            if (!inSubmission)
+            var AuthCode = userQuery.AuthCode;
+            var Latitude = userQuery.Latitude;
+            var Longitude = userQuery.Longitude;
+
+
+            Debug.WriteLine($"Latitude: {Latitude}, Longitude: {Longitude}");
+            try
             {
-                inSubmission = true;
-                Debug.WriteLine($"Latitude: {Latitude}, Longitude: {Longitude}");
-                try
+                if (Latitude == 0 || Longitude == 0)
                 {
-                    if (Latitude == 0 || Longitude == 0)
-                    {
-                        var ex = new Exception("");
-                        ex.Data.Add("NO LOCATION",
-                            "We could not get your location sorry. Please reload the page or resubmit");
-                        throw ex;
-                    }
-
-                    var query = from session in _context.Session
-                                where session.SessionCode == AuthCode
-                                select session;
-
-                    var selectedSession = query.FirstOrDefault<FastCast.Models.Session>();
-
-                    FastCastCoordinate sessionCoord = new FastCastCoordinate(latitude: selectedSession.Latitude,
-                                                                             longitude: selectedSession.Longitude);
-
-                    FastCastCoordinate userCoord = new FastCastCoordinate(latitude: Latitude,
-                                                                          longitude: Longitude);
-
-                    Double difference = sessionCoord.GetDistanceTo(userCoord); // Distance is in meters
-
-                    Debug.WriteLine(
-                        $"********************************************" +
-                        $"\n\n\n ${DateTime.Now.ToString()} DIFFERENCE IS {difference}" +
-                        $"\n\n\n********************************************\n\n\n"
-                        );
-
-                    if (difference > selectedSession.Radius)
-                    {
-                        var ex = new Exception("");
-                        ex.Data.Add("LOCATION ERROR",
-                            "Your longitude and latitude is not in the region specified by the initiator. Get closer");
-                        throw ex;
-                    }
-                    ViewData["Error"] = null;
-
-
-                    _fastCastService.AddData("SessionName", selectedSession.SessionName, true);
-                    _fastCastService.AddData("SessionCode", selectedSession.SessionCode, true);
-                    _fastCastService.AddData("SessionDuration", selectedSession.Timer.ToString(), true);
-                    _fastCastService.AddData("SessionFormId", selectedSession.FormId, true);
-                    //Response.Redirect("/Answer");
-
+                    var ex = new Exception("");
+                    ex.Data.Add("NO LOCATION",
+                        "We could not get your location sorry. Please reload the page or resubmit");
+                    throw ex;
                 }
-                catch (Exception e)
+
+                var query = from session in _context.Session
+                            where session.SessionCode == AuthCode
+                            select session;
+
+                var selectedSession = query.FirstOrDefault<FastCast.Models.Session>();
+
+                FastCastCoordinate sessionCoord = new FastCastCoordinate(latitude: selectedSession.Latitude,
+                                                                         longitude: selectedSession.Longitude);
+
+                FastCastCoordinate userCoord = new FastCastCoordinate(latitude: Latitude,
+                                                                      longitude: Longitude);
+
+                Double difference = sessionCoord.GetDistanceTo(userCoord); // Distance is in meters
+
+                Debug.WriteLine(
+                    $"********************************************" +
+                    $"\n\n\n ${DateTime.Now.ToString()} DIFFERENCE IS {difference}" +
+                    $"\n\n\n********************************************\n\n\n"
+                    );
+
+                if (difference > selectedSession.Radius)
                 {
-                    inSubmission = false;
-                    if (e is System.NullReferenceException) {
-                        ViewData["Error"] = "We could not find any session linked to your session code :(.";
+                    var ex = new Exception("");
+                    ex.Data.Add("LOCATION ERROR",
+                        "Your longitude and latitude is not in the region specified by the initiator. Get closer");
+                    throw ex;
+                }
+                ViewData["Error"] = null;
+
+
+                _fastCastService.AddData("SessionName", selectedSession.SessionName, true);
+                _fastCastService.AddData("SessionCode", selectedSession.SessionCode, true);
+                _fastCastService.AddData("SessionDuration", selectedSession.Timer.ToString(), true);
+                _fastCastService.AddData("SessionFormId", selectedSession.FormId, true);
+                //Response.Redirect("/Answer");
+
+            }
+            catch (Exception e)
+            {
+                if (e is System.NullReferenceException)
+                {
+                    ViewData["Error"] = "We could not find any session linked to your session code :(.";
+                }
+                else
+                {
+                    if (e.Data.Contains("LOCATION ERROR"))
+                    {
+                        ViewData["Error"] = e.Data["LOCATION ERROR"];
+                    }
+                    else if (e.Data.Contains("NO LOCATION"))
+                    {
+                        ViewData["Error"] = e.Data["NO LOCATION"];
                     }
                     else
                     {
-                        if (e.Data.Contains("LOCATION ERROR"))
-                        {
-                            ViewData["Error"] = e.Data["LOCATION ERROR"];
-                        }
-                        else if (e.Data.Contains("NO LOCATION"))
-                        {
-                            ViewData["Error"] = e.Data["NO LOCATION"];
-                        }
-                        else
-                        {
-                            ViewData["Error"] = "There was an error. Please contact us with this error: " + e.Message;
-                        }
+                        ViewData["Error"] = "There was an error. Please contact us with this error: " + e.Message;
                     }
-
-
                 }
+
+
             }
+
         }
     }
 }
