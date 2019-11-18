@@ -8,7 +8,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" asp-area="" asp-page="Session/Index">Create Session</a>
+        <a class="nav-link text-dark font-weight-bold" asp-area="" asp-page="Session/Index">Manage Sessions</a>
     </li>
     @*<li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Manage</a>
@@ -25,7 +25,7 @@ else
         <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>-->
     <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" id="login" asp-area="Identity" asp-page="/Account/Login">Login with Google</a>
+        <a class="nav-link text-dark font-weight-bold" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
 </ul>
