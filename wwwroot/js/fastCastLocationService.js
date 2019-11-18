@@ -66,12 +66,12 @@ function startProcessingLocation() {
     //})
 }
 
-document.addEventListener("keyup", function submit(e) {
-    if (e.keyCode === 13) {
-        // If user taps enter, submit!
-        document.getElementById("join-button").click();
-    }
-})
+//document.addEventListener("keyup", function submit(e) {
+//    if (e.keyCode === 13) {
+//        // If user taps enter, submit!
+//        document.getElementById("join-button").click();
+//    }
+//})
 
 
 window.onload = startProcessingLocation
