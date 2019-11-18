@@ -5,56 +5,62 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="jumbotron" style="background-image:url(https://i.imgur.com/kWr2DwP.jpg)">
+    <h3 class="alert alert-info" role="alert">SESSION INDEX</h3>
+    <hr class="my-4">
+    <p>All the available sessions can be viewed here</p>
 
-<p>
-    <a asp-page="Create" style = "font-family:courier,arial,helvetica;" class="bg-danger text-white">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].SessionCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].InitiatorId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].Timer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].FormId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Session) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SessionCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InitiatorId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.SessionId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.SessionId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.SessionId">Delete</a>
-                <form asp-page-handler="view" method="post">
-                    TODO: CHANGE DAT TIMER NAME
-                    <input type="hidden" name="sessionTime" value="@item.Timer" />
-                    <input type="hidden" name="sessionId" value="@item.SessionId" />
-                    <button type="submit" class="btn btn-primary">Start</button>
-                </form>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a type="button" class="btn btn-info" asp-page="Create">Create a new session</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Session[0].SessionCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Session[0].InitiatorId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Session[0].Timer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Session[0].FormId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Session)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SessionCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InitiatorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Timer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormId)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.SessionId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.SessionId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.SessionId">Delete</a>
+                        <form asp-page-handler="view" method="post">
+                            TODO: CHANGE DAT TIMER NAME
+                            <input type="hidden" name="sessionTime" value="@item.Timer" />
+                            <input type="hidden" name="sessionId" value="@item.SessionId" />
+                            <button type="submit" class="btn btn-primary">Start</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -4,34 +4,35 @@
     ViewData["Title"] = "Home page";
 }
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-<div class="text-center">
-    <h1 style = "font-family:courier,arial,helvetica;" class="bg-danger text-white">Enter Session Code</h1>
-    <form method="post">
-        <div class="form-group">
-            <label for="SessionId" class="text-primary">Session Code</label>
-            <input type="text" name="AuthCode">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Join</button>
-        </div>
-    </form>
-    @if (ViewData["SessionStatus"] != null)
-    {
-        @if ((bool)ViewData["SessionStatus"])
+<div class="jumbotron" style="background-image:url(https://im2.ezgif.com/tmp/ezgif-2-c089c04d7daf.gif)">
+    <div class="text-center" style="font-family:courier,arial,helvetica;">
+        <h4 style="font-family:courier;" class="alert alert-info" role="alert">Enter Session Code</h4>
+        <form method="post">
+            <div class="form-group">
+                <!-- <label for="SessionId" class="text-dark" >Session Code</label> -->
+                <input type="text" name="AuthCode">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-lg">Join Session</button>
+            </div>
+        </form>
+        @if (ViewData["SessionStatus"] != null)
         {
-            <h3 style="color:green;">You have successfully joined the session!</h3>
+            @if ((bool)ViewData["SessionStatus"])
+            {
+                <h5 class="alert alert-success" role="alert"> Congratulations!! You have successfully joined the session!</h5>
+            }
+            else
+            {
+                <h5 class="alert alert-danger" role="alert">That code doesn't work, try entering a new one!</h5>
+            }
         }
-        else
+
+        @if (ViewData["FormId"] != null)
         {
-            <h3 style="color:red;">That code doesn't, try entering a new one!</h3>
+            <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
         }
-    }
-    
-    @if (ViewData["FormId"] != null)
-    {
-        <iframe src="@Url.Content(String.Format("https://docs.google.com/forms/d/e/{0}/viewform?embedded=true", @ViewData["FormId"]))" width="640" height="685" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    }
-</div>
+    </div>
 
 
+    </div>
