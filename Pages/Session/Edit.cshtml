@@ -27,12 +27,7 @@
                         <span asp-validation-for="Session.SessionCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Session.InitiatorId" class="control-label"></label>
-                        <input asp-for="Session.InitiatorId" class="form-control" />
-                        <span asp-validation-for="Session.InitiatorId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Session.Timer" class="control-label"></label>
+                        <label asp-for="Session.Timer" class="control-label">Duration (seconds)</label>
                         <input asp-for="Session.Timer" class="form-control" />
                         <span asp-validation-for="Session.Timer" class="text-danger"></span>
                     </div>
@@ -52,7 +47,7 @@
                         <span asp-validation-for="Session.Longitude" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Session.Radius" class="control-label"></label>
+                        <label asp-for="Session.Radius" class="control-label">Radius (meters)</label>
                         <input asp-for="Session.Radius" class="form-control" />
                         <span asp-validation-for="Session.Radius" class="text-danger"></span>
                     </div>
