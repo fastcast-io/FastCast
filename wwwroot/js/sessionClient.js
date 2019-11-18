@@ -83,8 +83,8 @@ sessionConnection.on("StopTimer", function () {
         statusStartedProgress.style.display = "none";
         statusEndProgress.style.display = "initial";
     }
-    console.log("yeah it's over");
-    durationSpan.innerText = 0;
+    //console.log("yeah it's over");
+    //durationSpan.innerText = 0;
     shortJumbo.innerText = "Timer stopped. Thank you for participating";
     setInterval(function () {
         console.log("Inside timer stopped")
