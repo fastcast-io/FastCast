@@ -47,6 +47,7 @@ sessionConnection.start().then(function () {
 });
 
 sessionConnection.on("ShowDurationLeft", function (durationLeft) {
+
     if (!hasStarted) {
         hasStarted = true
         // Form
