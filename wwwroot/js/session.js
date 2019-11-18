@@ -51,6 +51,10 @@ document.getElementById("startTimer").addEventListener("click", function (event)
     event.preventDefault();
 })
 
+sessionConnection.on("UserHasJoined", function () {
+    console.log("A new user has joined the session");
+})
+
 sessionConnection.on("ShowDurationLeft", function (durationLeft) {
     if (!endedTimer) {
         if (parseFloat(durationLeft.remaining) > 0) {

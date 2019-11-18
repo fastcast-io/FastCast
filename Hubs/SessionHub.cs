@@ -66,6 +66,7 @@ namespace FastCast.Hubs
 
         public async Task JoinSession(string sessionCode)
         {
+            Debug.WriteLine("Someone joined a session!");
             // Need to implement logic to check if session has started // Can check that on the front end....
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionCode);
             await Clients.Group(sessionCode).UserHasJoined();

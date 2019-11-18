@@ -34,10 +34,10 @@ var sessionConnection = new signalR.HubConnectionBuilder().withUrl("/sessionHub"
 sessionConnection.start().then(function () {
     console.log("Connection was started for the client");
 
-    console.log("Joining the session right away")
     mySessionCode = document.getElementById("mySessionCode").innerText;
+    console.log(`Joining the session right away with session code: ${mySessionCode}`)
     sessionConnection.invoke("JoinSession", mySessionCode).then(function () {
-        console.log("Client has joined the session");
+        //console.log("Client has joined the session");
     }).catch(function (err) {
         return console.error(err.toString());
     });
@@ -45,6 +45,10 @@ sessionConnection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+sessionConnection.on("UserHasJoined", function () {
+        console.log("A new user has joined the session");
+})
 
 sessionConnection.on("ShowDurationLeft", function (durationLeft) {
 
