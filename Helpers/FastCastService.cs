@@ -7,16 +7,30 @@ namespace FastCast
 {
     public interface IFastCastService
     {
-        void AddData(string key, string data);
+        void AddData(string key, string data, bool forceUpdate = false);
         string GetData(string key);
     }
     public class FastCastService: IFastCastService
     {
         private Dictionary<String, String> fastCastService = new Dictionary<string, string>();
 
-        public void AddData(string key, string data)
+        public void AddData(string key, string data, bool forceUpdate = false)
         {
-            fastCastService.Add(key, data);
+            if (fastCastService.ContainsKey(key))
+            {
+                if (forceUpdate)
+                {
+                    fastCastService[key] = data;
+                }
+                else
+                {
+                    fastCastService.Add(key, data);
+                }
+            }
+            else
+            {
+                fastCastService.Add(key, data);
+            }
         }
 
         public string GetData(string key)
