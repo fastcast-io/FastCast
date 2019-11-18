@@ -10,7 +10,8 @@ namespace FastCast.Pages
     public class AnswerModel : PageModel
     {
         private readonly IFastCastService _fastCastService;
-
+        public string SessionFormId { get; set; }
+        public bool Authenticated { get; set; }
         public AnswerModel(IFastCastService fastCastService)
         {
             _fastCastService = fastCastService;
@@ -22,16 +23,19 @@ namespace FastCast.Pages
             if (sessionCode == "-1")
             {
                 ViewData["SessionAnswerError"] = "Could not authentify your request. Please re-enter your session code in the home page";
+                Authenticated = false;
             }
             else
             {
+                Authenticated = true;
                 ViewData["SessionCode"] = sessionCode;
                 ViewData["SessionName"] = _fastCastService.GetData("SessionName");
+                SessionFormId = _fastCastService.GetData("SessionFormId");
                 ViewData["SessionFormId"] = _fastCastService.GetData("SessionFormId");
                 ViewData["SessionDuration"] = _fastCastService.GetData("SessionDuration");
             }
         }
-
+        
         public async Task<IActionResult> OnPostAsync()
         {
             // Todo: add some more checks and different checks
