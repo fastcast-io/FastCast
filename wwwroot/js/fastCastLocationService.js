@@ -59,9 +59,6 @@ function formSubmit(e) {
 function startProcessingLocation() {
     console.log("Window loaded");
     $('#joinSession').submit(formSubmit)
-    $('#joinSession').on('click', function (e) {
-        $("#joinSession").submit();
-    })
     //getLocation();
     //$(document).on("submit", function t() {
     //    console.log(`Getting location before submit`)
